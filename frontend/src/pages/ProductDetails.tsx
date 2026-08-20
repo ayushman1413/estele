@@ -105,6 +105,7 @@ export default function ProductDetails() {
             </span>
           </div>
 
+
           <div className="mt-6 flex flex-wrap gap-3">
             <button disabled={!inStock || busy} onClick={onAdd} className="btn-primary">
               <ShoppingBag className="h-4 w-4" /> Add to cart
@@ -113,6 +114,7 @@ export default function ProductDetails() {
               Buy now <ArrowRight className="h-4 w-4" />
             </button>
           </div>
+
 
           <div className="mt-10 grid gap-3 border-t border-ink-100 pt-8 text-sm text-ink-500 sm:grid-cols-3">
             <p className="flex items-center gap-2"><Truck className="h-4 w-4" /> Free shipping over $150</p>
