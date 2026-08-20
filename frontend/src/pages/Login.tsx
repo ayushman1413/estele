@@ -24,8 +24,7 @@ export default function Login() {
     try {
       await login(loginEmail, loginPassword);
       toast.success('Signed in successfully!');
-      
-      // Determine destination
+
       const fromPath = (loc.state as any)?.from?.pathname;
       if (loginEmail === 'admin@example.com' || loginEmail.includes('admin')) {
         navigate('/admin', { replace: true });
