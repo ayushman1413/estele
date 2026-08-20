@@ -83,7 +83,7 @@ export default function ProductCard({ product, onAdd, compact = false }: Props) 
           </div>
         )}
 
-        <div className="mt-auto flex items-center justify-between pt-2 gap-2">
+        <div className="mt-auto flex flex-col gap-2.5 pt-2 sm:flex-row sm:items-center sm:justify-between sm:gap-2">
           <div className="flex items-baseline gap-1.5 flex-wrap">
             <span className="font-display text-xl font-semibold text-ink-900">{formatPrice(product.price)}</span>
             {product.original_price && (
@@ -97,7 +97,7 @@ export default function ProductCard({ product, onAdd, compact = false }: Props) 
               onClick={handleClick}
               disabled={loading}
               aria-label={`Add ${product.name} to cart`}
-              className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-semibold shadow-sm transition active:scale-95 shrink-0 ${
+              className={`w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-full px-3.5 py-2 text-xs font-semibold shadow-sm transition active:scale-95 shrink-0 ${
                 loading
                   ? 'bg-ink-100 text-ink-400 cursor-wait'
                   : justAdded || quantityInCart > 0
