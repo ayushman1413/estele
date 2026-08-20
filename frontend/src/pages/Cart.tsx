@@ -1,15 +1,22 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingBag } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import { formatPrice } from '../utils/format';
 import CartItem from '../components/CartItem';
 import EmptyState from '../components/EmptyState';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 export default function CartPage() {
   const { cart, updateItem, removeItem, loading } = useCart();
+  const { user, initializing } = useAuth();
   const navigate = useNavigate();
 
-  if (!cart) {
+  if (initializing || (loading && (!cart || cart.items.length === 0))) {
+    return <LoadingSpinner />;
+  }
+
+  if (!user || !cart) {
     return (
       <div className="container-x py-16">
         <EmptyState icon={ShoppingBag} title="Sign in to view your cart"
@@ -17,10 +24,6 @@ export default function CartPage() {
           cta={{ label: 'Sign in', to: '/login' }} />
       </div>
     );
-  }
-
-  if (loading && cart.items.length === 0) {
-    return <div className="container-x py-16 text-center text-ink-500">Loading…</div>;
   }
 
   if (cart.items.length === 0) {

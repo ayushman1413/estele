@@ -23,7 +23,7 @@ const emptyCart: Cart = { id: 0, items: [], item_count: 0, subtotal: 0, shipping
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const { user } = useAuth();
   const [cart, setCart] = useState<Cart | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const refresh = useCallback(async () => {
     if (!user) {
