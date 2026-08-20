@@ -20,6 +20,8 @@ import Register from './pages/Register';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminOrders from './pages/AdminOrders';
 import AdminProducts from './pages/AdminProducts';
+import About from './pages/About';
+import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 
 const PublicLayout = () => (
@@ -76,6 +78,8 @@ const App = () => (
             <Route path="cart" element={<CartPage />} />
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
+            <Route path="about" element={<About />} />
+            <Route path="contact" element={<Contact />} />
 
             <Route element={<RequireAuth />}>
               <Route path="checkout" element={<Checkout />} />
