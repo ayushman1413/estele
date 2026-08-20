@@ -24,11 +24,9 @@ export default function AdminProducts() {
   const [page, setPage] = useState(1);
   const [lastPage, setLastPage] = useState(1);
 
-  // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
-  // Form State
   const [formData, setFormData] = useState({
     category_id: '',
     name: '',
@@ -244,24 +242,22 @@ export default function AdminProducts() {
                     </td>
                     <td className="py-4 px-6">
                       <span
-                        className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
-                          product.stock > 10
+                        className={`text-xs font-semibold px-2.5 py-1 rounded-full ${product.stock > 10
                             ? 'bg-emerald-50 text-emerald-700'
                             : product.stock > 0
-                            ? 'bg-amber-50 text-amber-700'
-                            : 'bg-rose-50 text-rose-700'
-                        }`}
+                              ? 'bg-amber-50 text-amber-700'
+                              : 'bg-rose-50 text-rose-700'
+                          }`}
                       >
                         {product.stock} in stock
                       </span>
                     </td>
                     <td className="py-4 px-6">
                       <span
-                        className={`text-xs font-semibold px-2.5 py-1 rounded-full ${
-                          product.is_active
+                        className={`text-xs font-semibold px-2.5 py-1 rounded-full ${product.is_active
                             ? 'bg-blue-50 text-blue-700'
                             : 'bg-gray-100 text-gray-600'
-                        }`}
+                          }`}
                       >
                         {product.is_active ? 'Active' : 'Draft'}
                       </span>
