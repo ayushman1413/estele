@@ -12,11 +12,24 @@ export default function OrderDetails() {
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const fetchOrder = async (silent = false) => {
+    if (!silent) setLoading(true);
+    try {
+      const r = await api.get(`/orders/${id}`);
+      setOrder(r.data.data);
+    } catch (err) {
+      if (!silent) toast.error(describeError(err).message);
+    } finally {
+      if (!silent) setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    api.get(`/orders/${id}`)
-      .then((r) => setOrder(r.data.data))
-      .catch((err) => toast.error(describeError(err).message))
-      .finally(() => setLoading(false));
+    fetchOrder();
+    const interval = setInterval(() => {
+      fetchOrder(true);
+    }, 10000);
+    return () => clearInterval(interval);
   }, [id]);
 
   if (loading) return <LoadingSpinner />;

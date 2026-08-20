@@ -22,8 +22,8 @@ export default function AdminDashboard() {
   const [recentOrders, setRecentOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchData = async () => {
-    setLoading(true);
+  const fetchData = async (silent = false) => {
+    if (!silent) setLoading(true);
     try {
       const [statsRes, ordersRes] = await Promise.all([
         api.get('/admin/dashboard/stats'),
@@ -32,14 +32,18 @@ export default function AdminDashboard() {
       setStats(statsRes.data.data);
       setRecentOrders(ordersRes.data.data.items);
     } catch (err) {
-      toast.error(describeError(err).message);
+      if (!silent) toast.error(describeError(err).message);
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchData();
+    const interval = setInterval(() => {
+      fetchData(true);
+    }, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -55,7 +59,7 @@ export default function AdminDashboard() {
           </p>
         </div>
         <button
-          onClick={fetchData}
+          onClick={() => fetchData(false)}
           disabled={loading}
           className="btn-secondary self-start sm:self-auto flex items-center gap-2 text-xs py-2 px-4"
         >

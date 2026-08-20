@@ -42,8 +42,8 @@ export default function AdminOrders() {
   const [totalOrders, setTotalOrders] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const fetchOrders = async (targetPage = page, status = currentStatus) => {
-    setLoading(true);
+  const fetchOrders = async (targetPage = page, status = currentStatus, silent = false) => {
+    if (!silent) setLoading(true);
     try {
       let url = `/admin/orders?page=${targetPage}&per_page=15`;
       if (status) url += `&status=${status}`;
@@ -53,15 +53,19 @@ export default function AdminOrders() {
       setLastPage(res.data.data.meta.last_page);
       setTotalOrders(res.data.data.meta.total);
     } catch (err) {
-      toast.error(describeError(err).message);
+      if (!silent) toast.error(describeError(err).message);
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchOrders(1, currentStatus);
-  }, [currentStatus]);
+    fetchOrders(page, currentStatus);
+    const interval = setInterval(() => {
+      fetchOrders(page, currentStatus, true);
+    }, 10000);
+    return () => clearInterval(interval);
+  }, [currentStatus, page]);
 
   const handleTabChange = (status: string) => {
     if (status) {

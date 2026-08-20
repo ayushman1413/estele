@@ -10,10 +10,23 @@ export default function Orders() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const fetchOrders = async (silent = false) => {
+    if (!silent) setLoading(true);
+    try {
+      const r = await api.get('/orders');
+      setOrders(r.data.data.items);
+    } catch {
+    } finally {
+      if (!silent) setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    api.get('/orders')
-      .then((r) => setOrders(r.data.data.items))
-      .finally(() => setLoading(false));
+    fetchOrders();
+    const interval = setInterval(() => {
+      fetchOrders(true);
+    }, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   if (loading) return <LoadingSpinner />;
