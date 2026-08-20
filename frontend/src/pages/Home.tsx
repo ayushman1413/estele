@@ -22,6 +22,7 @@ const testimonials = [
   { name: 'Jordan P.', quote: 'Fast shipping, beautiful packaging. A real treat.', rating: 5 },
 ];
 
+
 export default function Home() {
   const [featured, setFeatured] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -57,7 +58,6 @@ export default function Home() {
     try {
       await addItem(product.id);
     } catch {
-      // Toast already handled by context
     }
   };
 
