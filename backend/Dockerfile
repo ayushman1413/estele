@@ -38,7 +38,7 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Install dependencies and optimize autoloading
-RUN composer install --no-interaction --no-dev --optimize-autoloader
+RUN composer install --no-interaction --no-dev --optimize-autoloader --ignore-platform-reqs
 
 # Copy entrypoint script
 COPY docker-entrypoint.sh /usr/local/bin/
